@@ -9,7 +9,7 @@ import { getMicroserviceOptions } from '../grpc.options'
 export class AuthService implements OnModuleInit {
   constructor(private readonly http: HttpService) {}
   //'http://docker.for.mac.localhost:3020'
-  @Client({ ...getMicroserviceOptions('docker.for.mac.localhost:3020') })
+  @Client({ ...getMicroserviceOptions(process.env.AUTH_SERVICE_URL) })
   private client: ClientGrpc
   private grpcService: IUser
 
