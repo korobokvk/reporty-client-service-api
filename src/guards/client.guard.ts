@@ -10,7 +10,8 @@ export class ClientGuard implements CanActivate {
     const {
       headers: { authorization },
     } = context.switchToHttp().getRequest()
-    const response = this.authService.isAuthUser('jwt')
+
+    const response = this.authService.isAuthUser(authorization)
     return response.pipe(
       map((data: boolean) => {
         console.log(data)

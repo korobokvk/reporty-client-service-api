@@ -1,12 +1,19 @@
-import { Controller, Post, Body } from '@nestjs/common'
+import { Controller, Post, Body, Logger } from '@nestjs/common'
 import { AuthService } from './auth.service'
+import { map } from 'rxjs/operators'
+
+class CredentialDTO {
+  readonly username: string
+  readonly password: string
+}
 
 @Controller('auth')
 export class AuthController {
+  private logger = new Logger('AuthController')
   constructor(private readonly authService: AuthService) {}
 
   @Post()
-  createUser(@Body() credentials: { username: string; password: string }) {
-    return this.authService.userAuth(credentials)
+  async createUser(@Body() body: CredentialDTO) {
+    return this.authService.userAuth(body)
   }
 }
