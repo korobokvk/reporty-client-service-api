@@ -5,6 +5,6 @@ RUN npm install
 COPY tsconfig.build.json tsconfig.build.json
 RUN npm run build
 ENV AUTH_SERVICE_URL=host.docker.internal:3020
-COPY dist /usr/src/app
+COPY . /usr/src/app
 
 CMD ["npm", "run", "start:prod"]
