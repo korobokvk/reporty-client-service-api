@@ -12,8 +12,13 @@ export class AuthController {
   private logger = new Logger('AuthController')
   constructor(private readonly authService: AuthService) {}
 
-  @Post()
-  async createUser(@Body() body: CredentialDTO) {
+  @Post('sign-in')
+  async signInUser(@Body() body: CredentialDTO) {
+    return this.authService.userAuth(body)
+  }
+
+  @Post('sign-up')
+  async signUpUser(@Body() body: CredentialDTO) {
     return this.authService.userAuth(body)
   }
 }
