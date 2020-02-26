@@ -21,9 +21,9 @@ export class AuthService implements OnModuleInit {
     return this.grpcService.isAuthUser(JWT).pipe(map((response) => response))
   }
 
-  userAuth({ username, password }: { username: string; password: string }): Observable<boolean> {
+  userAuth({ email, password }: { email: string; password: string }): Observable<boolean> {
     const helloRequest$ = new ReplaySubject<ICredentials>()
-    helloRequest$.next({ username, password })
+    helloRequest$.next({ email, password })
     return this.grpcService.userAuth(helloRequest$).pipe(
       map((data) => {
         helloRequest$.complete()

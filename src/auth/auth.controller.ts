@@ -3,7 +3,7 @@ import { AuthService } from './auth.service'
 import { map } from 'rxjs/operators'
 
 class CredentialDTO {
-  readonly username: string
+  readonly email: string
   readonly password: string
 }
 
