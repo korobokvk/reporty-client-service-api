@@ -3,7 +3,7 @@ import { AuthService } from './auth.service'
 import { map } from 'rxjs/operators'
 
 class CredentialDTO {
-  readonly username: string
+  readonly email: string
   readonly password: string
 }
 
@@ -12,8 +12,13 @@ export class AuthController {
   private logger = new Logger('AuthController')
   constructor(private readonly authService: AuthService) {}
 
-  @Post()
-  async createUser(@Body() body: CredentialDTO) {
+  @Post('sign-in')
+  async signInUser(@Body() body: CredentialDTO) {
+    return this.authService.userAuth(body)
+  }
+
+  @Post('sign-up')
+  async signUpUser(@Body() body: CredentialDTO) {
     return this.authService.userAuth(body)
   }
 }
