@@ -19,6 +19,6 @@ export class AuthController {
 
   @Post('sign-up')
   async signUpUser(@Body() body: CredentialDTO) {
-    return this.authService.userAuth(body)
+    return this.authService.createUser(body)
   }
 }
