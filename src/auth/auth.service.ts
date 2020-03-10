@@ -1,6 +1,6 @@
 import { Injectable, HttpService, OnModuleInit } from '@nestjs/common'
 import { map, catchError } from 'rxjs/operators'
-import { Observable, ReplaySubject, of } from 'rxjs'
+import { Observable } from 'rxjs'
 import { Client, ClientGrpc } from '@nestjs/microservices'
 import { IUser, ICredentials, IJWT } from '../grpc.interface'
 import { getMicroserviceOptions } from '../grpc.options'
@@ -21,33 +21,17 @@ export class AuthService implements OnModuleInit {
     return this.grpcService.isAuthUser(JWT).pipe(map((response) => response))
   }
 
-  userAuth({ email, password }: { email: string; password: string }): Observable<IJWT> {
-    const helloRequest$ = new ReplaySubject<ICredentials>()
-    helloRequest$.next({ email, password })
-    return this.grpcService.userAuth(helloRequest$).pipe(
+  userAuth(credentials: ICredentials): Observable<IJWT> {
+    console.log(credentials)
+    return this.grpcService.userAuth(credentials).pipe(
       map((data) => {
-        helloRequest$.complete()
+        console.log(data)
         return data
-      }),
-      catchError((err) => {
-        helloRequest$.complete()
-        throw err
       }),
     )
   }
 
-  createUser({ email, password }: { email: string; password: string }): Observable<boolean> {
-    const helloRequest$ = new ReplaySubject<ICredentials>()
-    helloRequest$.next({ email, password })
-    return this.grpcService.createUser(helloRequest$).pipe(
-      map((data) => {
-        helloRequest$.complete()
-        return data
-      }),
-      catchError((err) => {
-        helloRequest$.complete()
-        throw err
-      }),
-    )
+  createUser(credentials: ICredentials): Observable<IJWT> {
+    return this.grpcService.createUser(credentials)
   }
 }

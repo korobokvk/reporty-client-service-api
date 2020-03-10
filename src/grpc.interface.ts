@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs'
 
 export interface IUser {
-  userAuth(credentials: Observable<ICredentials>): Observable<IJWT>
-  createUser(credentials: Observable<ICredentials>): Observable<boolean>
+  userAuth(credentials: ICredentials): Observable<IJWT>
+  createUser(credentials: ICredentials): Observable<IJWT>
   isAuthUser(JWT: IJWT): Observable<boolean>
 }
 export interface IJWT {
