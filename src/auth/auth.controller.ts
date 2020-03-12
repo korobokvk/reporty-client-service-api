@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Logger } from '@nestjs/common'
+import { Controller, Post, Body, Logger, Res, Headers, Get } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { map } from 'rxjs/operators'
 
@@ -9,7 +9,6 @@ class CredentialDTO {
 
 @Controller('auth')
 export class AuthController {
-  private logger = new Logger('AuthController')
   constructor(private readonly authService: AuthService) {}
 
   @Post('sign-in')
@@ -20,5 +19,11 @@ export class AuthController {
   @Post('sign-up')
   async signUpUser(@Body() body: CredentialDTO) {
     return this.authService.createUser(body)
+  }
+
+  @Get('check-auth')
+  async checkAuth(@Headers() headers) {
+    const { authorization } = headers
+    return this.authService.isAuthUser(authorization)
   }
 }

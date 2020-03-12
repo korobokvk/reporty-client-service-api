@@ -6,7 +6,7 @@ package app;
 service AuthService {
   rpc UserAuth (Credentials) returns (JWT) {};
   rpc CreateUser (Credentials) returns (JWT) {};
-  rpc IsAuthUser (JWT) returns (Success) {};
+  rpc IsAuthUser (JWT) returns (JWT) {};
 };
 service DataBaseProvider {
   rpc CreateUser (Credentials) returns (SuccessMessage);
