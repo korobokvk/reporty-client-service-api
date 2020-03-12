@@ -1,9 +1,10 @@
-import { Injectable, HttpService, OnModuleInit } from '@nestjs/common'
+import { Injectable, HttpService, OnModuleInit, HttpException } from '@nestjs/common'
 import { map, catchError } from 'rxjs/operators'
-import { Observable, ReplaySubject, of } from 'rxjs'
+import { Observable } from 'rxjs'
 import { Client, ClientGrpc } from '@nestjs/microservices'
-import { IUser, ICredentials } from '../grpc.interface'
+import { IUser, ICredentials, IJWT } from '../grpc.interface'
 import { getMicroserviceOptions } from '../grpc.options'
+import { errorsCode } from '../constants/grpc-errors-code'
 
 @Injectable()
 export class AuthService implements OnModuleInit {
@@ -17,21 +18,36 @@ export class AuthService implements OnModuleInit {
     this.grpcService = this.client.getService<IUser>('AuthService')
   }
 
-  isAuthUser(JWT): Observable<boolean> {
-    return this.grpcService.isAuthUser(JWT).pipe(map((response) => response))
+  isAuthUser(JWT): Observable<any> {
+    return this.grpcService.isAuthUser({ JWT }).pipe(
+      map((response) => {
+        return response
+      }),
+      catchError((err) => {
+        console.log(err.details, errorsCode[err.code], err.code)
+        throw new HttpException(err.details, errorsCode[err.code])
+      }),
+    )
   }
 
-  userAuth({ email, password }: { email: string; password: string }): Observable<any> {
-    const helloRequest$ = new ReplaySubject<ICredentials>()
-    helloRequest$.next({ email, password })
-    return this.grpcService.userAuth(helloRequest$).pipe(
+  userAuth(credentials: ICredentials): Observable<IJWT> {
+    return this.grpcService.userAuth(credentials).pipe(
       map((data) => {
-        helloRequest$.complete()
         return data
       }),
       catchError((err) => {
-        helloRequest$.complete()
-        throw err
+        throw new HttpException(err.details, errorsCode[err.code])
+      }),
+    )
+  }
+
+  createUser(credentials: ICredentials): Observable<IJWT> {
+    return this.grpcService.createUser(credentials).pipe(
+      map((data) => {
+        return data
+      }),
+      catchError((err) => {
+        throw new HttpException(err.details, errorsCode[err.code])
       }),
     )
   }
