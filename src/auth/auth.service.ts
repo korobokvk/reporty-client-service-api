@@ -24,7 +24,6 @@ export class AuthService implements OnModuleInit {
         return response
       }),
       catchError((err) => {
-        console.log(err.details, errorsCode[err.code], err.code)
         throw new HttpException(err.details, errorsCode[err.code])
       }),
     )

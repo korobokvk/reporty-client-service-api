@@ -11,4 +11,5 @@ export const errorsCode = {
   [status.UNAUTHENTICATED]: 401,
   [status.UNAVAILABLE]: 500,
   [status.UNKNOWN]: 505,
+  [status.INTERNAL]: 400,
 }
