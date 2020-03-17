@@ -21,7 +21,7 @@ export class AuthService implements OnModuleInit {
   isAuthUser(JWT): Observable<any> {
     return this.grpcService.isAuthUser({ JWT }).pipe(
       map((response) => {
-        return response
+        return !!response
       }),
       catchError((err) => {
         throw new HttpException(err.details, errorsCode[err.code])

@@ -1,6 +1,5 @@
 import { Controller, Post, Body, Logger, Res, Headers, Get } from '@nestjs/common'
 import { AuthService } from './auth.service'
-import { map } from 'rxjs/operators'
 
 class CredentialDTO {
   readonly email: string
