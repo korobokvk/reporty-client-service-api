@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: master
-        image: korobokvk/reporty-client-service-api
+        image: korobokvk/reporty-client-service-api:latest
         resources:
           requests:
             cpu: 100m
