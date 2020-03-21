@@ -6,6 +6,6 @@ RUN npm install grpc
 COPY tsconfig.build.json tsconfig.build.json
 RUN npm run build
 ENV AUTH_SERVICE_URL=host.docker.internal:3020
-COPY dist /usr/src/app
+COPY /dist /usr/src/app
 
 CMD ["node", "dist/main"]
