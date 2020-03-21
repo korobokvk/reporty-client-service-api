@@ -8,4 +8,4 @@ RUN npm run build
 ENV AUTH_SERVICE_URL=host.docker.internal:3020
 COPY . /usr/src/app
 
-CMD ["node", "dist/main"]
+CMD ["node", "./dist/main"]
