@@ -10,7 +10,7 @@ import { errorsCode } from '../constants/grpc-errors-code'
 export class AuthService implements OnModuleInit {
   constructor(private readonly http: HttpService) {}
 
-  @Client({ ...getMicroserviceOptions(process.env.AUTH_SERVICE_URL) })
+  @Client({ ...getMicroserviceOptions(process.env.TEST_ENV) })
   private client: ClientGrpc
   private grpcService: IUser
 
