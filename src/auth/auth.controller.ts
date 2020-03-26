@@ -12,6 +12,7 @@ export class AuthController {
 
   @Post('sign-in')
   async signInUser(@Body() body: CredentialDTO) {
+    console.log(body, process.env.AUTH_SERVICE_URL)
     return this.authService.userAuth(body)
   }
 
