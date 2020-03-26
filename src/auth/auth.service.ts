@@ -6,11 +6,14 @@ import { IUser, ICredentials, IJWT } from '../grpc.interface'
 import { getMicroserviceOptions } from '../grpc.options'
 import { errorsCode } from '../constants/grpc-errors-code'
 
+const grpsRoute = process.env.TEST_ENV
 @Injectable()
 export class AuthService implements OnModuleInit {
-  constructor(private readonly http: HttpService) {}
+  constructor(private readonly http: HttpService) {
+    console.log(grpsRoute)
+  }
 
-  @Client({ ...getMicroserviceOptions(process.env.TEST_ENV) })
+  @Client({ ...getMicroserviceOptions(grpsRoute) })
   private client: ClientGrpc
   private grpcService: IUser
 
