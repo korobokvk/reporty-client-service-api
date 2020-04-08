@@ -12,7 +12,6 @@ export class AuthController {
 
   @Post('sign-in')
   async signInUser(@Body() body: CredentialDTO) {
-    console.log(body, process.env.AUTH_SERVICE_URL, 'ENV_FROM_K8S', process.env.TEST_ENV)
     return this.authService.userAuth(body)
   }
 

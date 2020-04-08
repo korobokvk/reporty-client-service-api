@@ -9,10 +9,6 @@ import { errorsCode } from '../constants/grpc-errors-code'
 const grpsRoute = process.env.AUTH_SERVICE
 @Injectable()
 export class AuthService implements OnModuleInit {
-  constructor(private readonly http: HttpService) {
-    console.log(grpsRoute)
-  }
-
   @Client({ ...getMicroserviceOptions(grpsRoute) })
   private client: ClientGrpc
   private grpcService: IUser
@@ -35,11 +31,9 @@ export class AuthService implements OnModuleInit {
   userAuth(credentials: ICredentials): Observable<IJWT> {
     return this.grpcService.userAuth(credentials).pipe(
       map((data) => {
-        console.log('RESPONSE API', data)
         return data
       }),
       catchError((err) => {
-        console.log('ERROR API', err)
         throw new HttpException(err.details, errorsCode[err.code])
       }),
     )
